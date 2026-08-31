@@ -46,6 +46,10 @@
                             }
                         }
                     }
+                    else
+                    {
+                        throw new ArgumentException("Ett registreringsnummer måste bestå av exakt 6 tecken.");
+                    }
                 }
                 else
                 {
