@@ -71,7 +71,14 @@
         public string Model
         {
             get { return model; }
-            set { this.model = value; }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value)) 
+                {
+                    model = value.ToUpper();
+                }
+                else { throw new ArgumentException("Modellen får inte vara tom."); }                 
+            }
         }
 
         //TODO Modell ska valideras, sparas i objektet och visas i UI
