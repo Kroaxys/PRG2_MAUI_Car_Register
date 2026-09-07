@@ -85,7 +85,13 @@
         public string Manufacturer
         {
             get { return manufacturer; }
-            set { this.manufacturer = value; }
+            set { 
+                if (!string.IsNullOrWhiteSpace(value))
+                    {
+                    manufacturer = value.ToUpper();
+                    }
+                else { throw new ArgumentException("Tillveraken får inte vara tom."); }
+            }
         }
 
         //TODO Lägg till möjligheten att spara realistisk årsmodell, validera, spara och visa i objektet och visas i UI. Tips: Regex.IsMatch()
