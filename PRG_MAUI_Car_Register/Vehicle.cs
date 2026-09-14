@@ -83,7 +83,7 @@ namespace PRG_MAUI_Car_Register
                     string temp = value.ToUpper();
                     if (Regex.IsMatch(temp, @"^[A-Z0-9 ]+$"))
                     {
-                        model = temp;
+                        model = temp.Trim();
                     }
                     else { throw new ArgumentException("Modellen accepterar endast A-Z och 0-9 och mellanrum."); }
                 }
@@ -102,7 +102,7 @@ namespace PRG_MAUI_Car_Register
                     string temp = value.ToUpper();
                     if (Regex.IsMatch(temp, @"^[A-Z ]+$"))
                     {
-                        manufacturer = temp;
+                        manufacturer = temp.Trim();
                     }
                     else { throw new ArgumentException("Modellen accepterar endast A-Z och mellanrum."); }
                 }
