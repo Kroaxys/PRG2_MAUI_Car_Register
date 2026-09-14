@@ -1,4 +1,6 @@
-﻿namespace PRG_MAUI_Car_Register
+﻿using System.Text.RegularExpressions;
+
+namespace PRG_MAUI_Car_Register
 {
     class Vehicle
     {
@@ -8,6 +10,7 @@
         private string registrationNumber = string.Empty;
         private string manufacturer = string.Empty;
         private string model = string.Empty;
+        private string year = string.Empty;
 
         // Konstruktor (en metod med samma namn som klassen, som returnerar ett objekt)
         public Vehicle(Type vehicleType) // en konstruktor kan, men måste inte, ta parametrar
@@ -73,11 +76,11 @@
             get { return model; }
             set
             {
-                if (!string.IsNullOrWhiteSpace(value)) 
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     model = value.ToUpper();
                 }
-                else { throw new ArgumentException("Modellen får inte vara tom."); }                 
+                else { throw new ArgumentException("Modellen får inte vara tom."); }
             }
         }
 
@@ -85,22 +88,30 @@
         public string Manufacturer
         {
             get { return manufacturer; }
-            set { 
+            set
+            {
                 if (!string.IsNullOrWhiteSpace(value))
-                    {
+                {
                     manufacturer = value.ToUpper();
-                    }
+                }
                 else { throw new ArgumentException("Tillveraken får inte vara tom."); }
             }
         }
 
         //TODO Lägg till möjligheten att spara realistisk årsmodell, validera, spara och visa i objektet och visas i UI. Tips: Regex.IsMatch()
-
+        public string Year
+        {
+            get { return year; }
+            set
+            {
+                year = value.ToUpper();
+            }
+        }
 
         //TODO Modifiera overriden på ToString() så att allt visas som önskat i UIs listBox
         public override string ToString()
         {
-            return this.registrationNumber + "\t" + this.vehicleType + "\t" + this.manufacturer + "\t" + this.model;
+            return this.registrationNumber + "\t" + this.vehicleType + "\t" + this.manufacturer + "\t" + this.model + "\t" + this.year;
         }
     }
 }
