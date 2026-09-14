@@ -85,7 +85,7 @@ namespace PRG_MAUI_Car_Register
                     {
                         model = temp;
                     }
-                    else { throw new ArgumentException("Modellen accepterar endast A-Z och 0-9"); }
+                    else { throw new ArgumentException("Modellen accepterar endast A-Z och 0-9 och mellanrum."); }
                 }
                 else { throw new ArgumentException("Modellen får inte vara tom."); }
             }
@@ -99,7 +99,12 @@ namespace PRG_MAUI_Car_Register
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    manufacturer = value.ToUpper();
+                    string temp = value.ToUpper();
+                    if (Regex.IsMatch(temp, @"^[A-Z ]+$"))
+                    {
+                        manufacturer = temp;
+                    }
+                    else { throw new ArgumentException("Modellen accepterar endast A-Z och mellanrum."); }
                 }
                 else { throw new ArgumentException("Tillveraken får inte vara tom."); }
             }
