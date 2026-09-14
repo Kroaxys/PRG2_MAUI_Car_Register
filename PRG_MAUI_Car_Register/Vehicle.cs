@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿
+using Microsoft.Maui.Graphics.Text;
+using System.Text.RegularExpressions;
 
 namespace PRG_MAUI_Car_Register
 {
@@ -104,7 +106,26 @@ namespace PRG_MAUI_Car_Register
             get { return year; }
             set
             {
-                year = value.ToUpper();
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    if (Regex.IsMatch(value, @"^[1-2][0-9]{3}$"))
+                    {
+                        int yearInt;
+                        if (int.TryParse(value, out yearInt))
+                        {
+                            Console.WriteLine(yearInt);
+                            Console.WriteLine(DateTime.Now.Year);
+                            if (yearInt >= 1895 && yearInt <= DateTime.Now.Year)
+                            {
+                                year = yearInt.ToString();
+                            }
+                            else { throw new ArgumentException("Inte ett giltligt nummer."); }
+                        }
+                        else { throw new ArgumentException("Inte ett giltligt nummer."); }
+                    }
+                    else { throw new ArgumentException("Inte ett giltligt nummer."); }
+                }
+                else { throw new ArgumentException("Året är tomt"); }
             }
         }
 
