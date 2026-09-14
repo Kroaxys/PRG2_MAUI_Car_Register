@@ -80,7 +80,12 @@ namespace PRG_MAUI_Car_Register
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    model = value.ToUpper();
+                    string temp = value.ToUpper();
+                    if (Regex.IsMatch(temp, @"^[A-Z0-9 ]+$"))
+                    {
+                        model = temp;
+                    }
+                    else { throw new ArgumentException("Modellen accepterar endast A-Z och 0-9"); }
                 }
                 else { throw new ArgumentException("Modellen får inte vara tom."); }
             }
