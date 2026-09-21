@@ -1,4 +1,6 @@
-﻿namespace PRG_MAUI_Car_Register
+﻿using PRG_MAUI_Car_Register.Model;
+
+namespace PRG_MAUI_Car_Register.View
 {
     public partial class MainPage : ContentPage
     {
@@ -14,7 +16,7 @@
         {
             try
             {
-                Vehicle vehicle = new Vehicle((Vehicle.Type)pickerType.SelectedIndex);
+                Vehicle vehicle = new Vehicle(/*(Vehicle.Type)*/pickerType.SelectedIndex.ToString());
 
                 vehicle.RegistrationNumber = entryRegistrationNumber.Text;
                 vehicle.Manufacturer = entryManufacturer.Text;
@@ -44,15 +46,15 @@
 
             if (radioCar.IsChecked)
             {
-                filteredList = vehicleList.Where(v => v.VehicleType == Vehicle.Type.Bil).ToList();
+                filteredList = vehicleList.Where(v => v.VehicleType == "Car"/*Vehicle.Type.Bil*/).ToList();
             }
             else if (radioMC.IsChecked)
             {
-                filteredList = vehicleList.Where(v => v.VehicleType == Vehicle.Type.MC).ToList();
+                filteredList = vehicleList.Where(v => v.VehicleType == "MC"/*Vehicle.Type.MC*/).ToList();
             }
             else if (radioTruck.IsChecked)
             {
-                filteredList = vehicleList.Where(v => v.VehicleType == Vehicle.Type.Lastbil).ToList();
+                filteredList = vehicleList.Where(v => v.VehicleType == "Truck"/*Vehicle.Type.Lastbil*/).ToList();
             }
             else
             {

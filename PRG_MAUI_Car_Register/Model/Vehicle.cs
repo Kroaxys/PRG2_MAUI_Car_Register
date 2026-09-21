@@ -2,20 +2,21 @@
 using Microsoft.Maui.Graphics.Text;
 using System.Text.RegularExpressions;
 
-namespace PRG_MAUI_Car_Register
+namespace PRG_MAUI_Car_Register.Model
 {
-    class Vehicle
+    abstract class Vehicle
     {
         // Medlemsvariabler
-        public enum Type { Bil, MC, Lastbil };
-        private Type vehicleType;
+        //public enum Type { Bil, MC, Lastbil };
+        //private Type vehicleType;
+        private string vehicleType;
         private string registrationNumber = string.Empty;
         private string manufacturer = string.Empty;
         private string model = string.Empty;
         private string year = string.Empty;
 
         // Konstruktor (en metod med samma namn som klassen, som returnerar ett objekt)
-        public Vehicle(Type vehicleType) // en konstruktor kan, men måste inte, ta parametrar
+        public Vehicle(string vehicleType, string registrationNumber, string manufacturer, string model, string year) // en konstruktor kan, men måste inte, ta parametrar
         {
             this.vehicleType = vehicleType;
         }
@@ -66,7 +67,7 @@ namespace PRG_MAUI_Car_Register
         }
 
         // Fordonstyp tas in från dropdown-menyn, och behöver därför inte valideras
-        public Type VehicleType
+        public string VehicleType
         {
             get { return vehicleType; }
             set { this.vehicleType = value; }
@@ -123,8 +124,6 @@ namespace PRG_MAUI_Car_Register
                         int yearInt;
                         if (int.TryParse(value, out yearInt))
                         {
-                            Console.WriteLine(yearInt);
-                            Console.WriteLine(DateTime.Now.Year);
                             if (yearInt >= 1895 && yearInt <= DateTime.Now.Year)
                             {
                                 year = yearInt.ToString();
@@ -144,5 +143,7 @@ namespace PRG_MAUI_Car_Register
         {
             return this.registrationNumber + "\t" + this.vehicleType + "\t" + this.manufacturer + "\t" + this.model + "\t" + this.year;
         }
+
+        //public abstract string GetDescription();
     }
 }
