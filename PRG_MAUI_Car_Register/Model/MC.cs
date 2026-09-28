@@ -9,6 +9,10 @@ namespace PRG_MAUI_Car_Register.Model
     internal class MC : Vehicle
     {
         private int doors;
+        public override string GetDescription()
+        {
+            throw new NotImplementedException();
+        }
         public MC(string vehicleType, string registrationNumber, string manufacturer, string model, string year) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
         {
             Doors = doors;
