@@ -1,10 +1,11 @@
 ﻿using PRG_MAUI_Car_Register.Model;
+using System.Collections.ObjectModel;
 
 namespace PRG_MAUI_Car_Register.View
 {
     public partial class MainPage : ContentPage
     {
-        List<Vehicle> vehicleList = new List<Vehicle>();
+        ObservableCollection<Vehicle> vehicleList = new ObservableCollection<Vehicle>();
 
         public MainPage()
         {
@@ -12,20 +13,26 @@ namespace PRG_MAUI_Car_Register.View
             pickerType.SelectedIndex = 0;
         }
 
+        
         private void OnRegisterClicked(object sender, EventArgs e)
         {
             try
             {
-                Vehicle vehicle = new Vehicle(/*(Vehicle.Type)*/pickerType.SelectedIndex.ToString());
+                //Vehicle vehicle = new Vehicle(/*(Vehicle.Type)*/pickerType.SelectedIndex.ToString());
 
-                vehicle.RegistrationNumber = entryRegistrationNumber.Text;
-                vehicle.Manufacturer = entryManufacturer.Text;
-                vehicle.Model = entryModel.Text;
-                vehicle.Year = entryYear.Text;
+                //vehicle.RegistrationNumber = entryRegistrationNumber.Text;
+                //vehicle.Manufacturer = entryManufacturer.Text;
+                //vehicle.Model = entryModel.Text;
+                //vehicle.Year = entryYear.Text;
 
-                vehicleList.Add(vehicle);
-                listViewVehicles.ItemsSource = null;
-                listViewVehicles.ItemsSource = vehicleList;
+
+
+
+                //vehicleList.Add(vehicle);
+                //listViewVehicles.ItemsSource = null;
+                //listViewVehicles.ItemsSource = vehicleList;
+
+                Vehicle vehicle; 
 
                 ClearTextFields();
             }
@@ -42,11 +49,11 @@ namespace PRG_MAUI_Car_Register.View
             if (e.Value != true) return;
 
             // Skapa en temporär filtrerad lista baserat på vilken radioknapp som är vald
-            List<Vehicle> filteredList;
+            IEnumerable<Vehicle> filteredList;
 
             if (radioCar.IsChecked)
             {
-                filteredList = vehicleList.Where(v => v.VehicleType == "Car"/*Vehicle.Type.Bil*/).ToList();
+                filteredList = vehicleList.Where(v => v.is Car).ToList();
             }
             else if (radioMC.IsChecked)
             {

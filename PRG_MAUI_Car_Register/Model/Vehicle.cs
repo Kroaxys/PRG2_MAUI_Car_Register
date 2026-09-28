@@ -144,6 +144,6 @@ namespace PRG_MAUI_Car_Register.Model
             return this.registrationNumber + "\t" + this.vehicleType + "\t" + this.manufacturer + "\t" + this.model + "\t" + this.year;
         }
 
-        //public abstract string GetDescription();
+        public abstract string GetDescription();
     }
 }
