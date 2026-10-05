@@ -1,5 +1,6 @@
 ﻿using PRG_MAUI_Car_Register.Model;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace PRG_MAUI_Car_Register.View
 {
@@ -13,7 +14,27 @@ namespace PRG_MAUI_Car_Register.View
             pickerType.SelectedIndex = 0;
         }
 
-        
+        private void OnPickerChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                //fix
+                string vehicle = pickerType.SelectedItem.ToString();
+                entryDoors.IsVisible = false;
+                entryCategory.IsVisible = false;
+                entryLoadCapacity.IsVisible = false;
+
+                switch (vehicle)
+                {
+                    case "Bil": { entryDoors.IsVisible = true; break; }
+                    case "MC": { entryCategory.IsVisible = true; break; }
+                    case "Lastbil": { entryLoadCapacity.IsVisible = true; break; }
+                }
+            }
+            catch { throw new ArgumentException("Invalid Picker."); }
+
+        }
+
         private void OnRegisterClicked(object sender, EventArgs e)
         {
             try
@@ -32,7 +53,7 @@ namespace PRG_MAUI_Car_Register.View
                 //listViewVehicles.ItemsSource = null;
                 //listViewVehicles.ItemsSource = vehicleList;
 
-                Vehicle vehicle; 
+                Vehicle vehicle;
 
                 ClearTextFields();
             }
@@ -51,25 +72,25 @@ namespace PRG_MAUI_Car_Register.View
             // Skapa en temporär filtrerad lista baserat på vilken radioknapp som är vald
             IEnumerable<Vehicle> filteredList;
 
-            if (radioCar.IsChecked)
-            {
-                filteredList = vehicleList.Where(v => v.is Car).ToList();
-            }
-            else if (radioMC.IsChecked)
-            {
-                filteredList = vehicleList.Where(v => v.VehicleType == "MC"/*Vehicle.Type.MC*/).ToList();
-            }
-            else if (radioTruck.IsChecked)
-            {
-                filteredList = vehicleList.Where(v => v.VehicleType == "Truck"/*Vehicle.Type.Lastbil*/).ToList();
-            }
-            else
-            {
-                // Om "Alla" är vald, visa hela listan
-                filteredList = vehicleList;
-            }
+            //if (radioCar.IsChecked)
+            //{
+            //    filteredList = vehicleList.Where(v => v.is Car).ToList();
+            //}
+            //else if (radioMC.IsChecked)
+            //{
+            //    filteredList = vehicleList.Where(v => v.VehicleType == "MC"/*Vehicle.Type.MC*/).ToList();
+            //}
+            //else if (radioTruck.IsChecked)
+            //{
+            //    filteredList = vehicleList.Where(v => v.VehicleType == "Truck"/*Vehicle.Type.Lastbil*/).ToList();
+            //}
+            //else
+            //{
+            //    // Om "Alla" är vald, visa hela listan
+            //    filteredList = vehicleList;
+            //}
 
-            listViewVehicles.ItemsSource = filteredList;
+            //listViewVehicles.ItemsSource = filteredList;
         }
 
         private void OnSearchClicked(object sender, EventArgs e)
