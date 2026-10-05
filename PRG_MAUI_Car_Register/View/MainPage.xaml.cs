@@ -18,7 +18,6 @@ namespace PRG_MAUI_Car_Register.View
         {
             try
             {
-                //fix
                 string vehicle = pickerType.SelectedItem.ToString();
                 entryDoors.IsVisible = false;
                 entryCategory.IsVisible = false;
@@ -43,17 +42,41 @@ namespace PRG_MAUI_Car_Register.View
 
                 //vehicle.RegistrationNumber = entryRegistrationNumber.Text;
                 //vehicle.Manufacturer = entryManufacturer.Text;
-                //vehicle.Model = entryModel.Text;
+                //vehicle.Model = entryModel.Text; 
                 //vehicle.Year = entryYear.Text;
 
-
-
-
-                //vehicleList.Add(vehicle);
-                //listViewVehicles.ItemsSource = null;
-                //listViewVehicles.ItemsSource = vehicleList;
+                string manufacturer = entryManufacturer.Text;
+                string year = entryYear.Text;
+                string registrationNumber = entryRegistrationNumber.Text;
+                string model = entryModel.Text;
 
                 Vehicle vehicle;
+                string vehicleType = pickerType.SelectedItem.ToString();
+
+                switch (vehicleType)
+                {
+                    case "Bil": {
+                            if (!int.TryParse(entryDoors.Text, out int doors)) { throw new ArgumentException("Ogiltlig symboler för dörrar"); }
+                            vehicle = new Car(vehicleType, registrationNumber, manufacturer, model, year, doors); 
+                            break; }
+                    case "MC": {
+                            string category = entryCategory.Text;
+                            vehicle = new MC(vehicleType, registrationNumber, manufacturer, model, year, category);
+                            break; }
+                    case "Lastbil": {
+                            if (!double.TryParse(entryLoadCapacity.Text, out double loadCapacity)) { throw new ArgumentException("Ogiltlig Lastkapasitet"); }
+                            vehicle = new Truck(vehicleType, registrationNumber, manufacturer, model, year, loadCapacity);
+                            break; }
+                    default: { throw new ArgumentException("Ogiltlig fordonstyp"); }
+                }
+                
+
+
+                vehicleList.Add(vehicle);
+                listViewVehicles.ItemsSource = null;
+                listViewVehicles.ItemsSource = vehicleList;
+
+                //Vehicle vehicle;
 
                 ClearTextFields();
             }

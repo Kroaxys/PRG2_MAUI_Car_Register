@@ -8,24 +8,25 @@ namespace PRG_MAUI_Car_Register.Model
 {
     internal class Truck : Vehicle
     {   
-        private int loadCapacity;
+        private double loadCapacity;
         public override string GetDescription()
         {
             throw new NotImplementedException();
         }
-        public Truck(string vehicleType, string registrationNumber, string manufacturer, string model, string year) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
+        public Truck(string vehicleType, string registrationNumber, string manufacturer, string model, string year, double loadCapacity) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
         {
             LoadCapacity = loadCapacity;
         }
-        public int LoadCapacity
+        public double LoadCapacity
         {
             get { return loadCapacity; }
             set
             {
-                if (value < 1 || value > 6)
+                if (value <= 0)
                 {
-                    throw new Exception("");
+                    throw new Exception("Ogiltlig lastkapacitet");
                 }
+                loadCapacity = value;
             }
         }
     }

@@ -13,7 +13,7 @@ namespace PRG_MAUI_Car_Register.Model
         {
             throw new NotImplementedException();
         }
-        public Car(string vehicleType, string registrationNumber, string manufacturer, string model, string year) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
+        public Car(string vehicleType, string registrationNumber, string manufacturer, string model, string year, int doors) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
         {
             Doors = doors;
         }
@@ -22,9 +22,9 @@ namespace PRG_MAUI_Car_Register.Model
             get { return doors; }
             set
             {
-                if (value < 1 || value > 6)
+                if (value < 1)
                 {
-                    throw new Exception("");
+                    throw new Exception("Invalid amount of doors.");
                 }
             }
         }

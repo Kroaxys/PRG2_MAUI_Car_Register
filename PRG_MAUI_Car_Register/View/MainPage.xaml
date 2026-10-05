@@ -25,7 +25,7 @@
             <Entry x:Name="entryYear" Placeholder="År" IsVisible="False"/>
             <Entry x:Name="entryDoors" Placeholder="Dörrar" IsVisible="False"/>
             <Entry x:Name="entryCategory" Placeholder="Categori" IsVisible="False"/>
-            <Entry x:Name="entryLoadCapacity" Placeholder="Last kapasitet" IsVisible="False"/>
+            <Entry x:Name="entryLoadCapacity" Placeholder="lastkapacitet (Ton)" IsVisible="False"/>
             <Button x:Name="buttonRegister" Text="Registrera" Clicked="OnRegisterClicked" Margin="0,0,0,20" BackgroundColor="DarkRed"/>
 
             <Label Text="Kategori:" FontAttributes="Bold" />

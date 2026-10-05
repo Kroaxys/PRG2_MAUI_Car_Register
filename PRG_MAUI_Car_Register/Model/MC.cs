@@ -8,23 +8,23 @@ namespace PRG_MAUI_Car_Register.Model
 {
     internal class MC : Vehicle
     {
-        private int category;
+        private string category;
         public override string GetDescription()
         {
             throw new NotImplementedException();
         }
-        public MC(string vehicleType, string registrationNumber, string manufacturer, string model, string year) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
+        public MC(string vehicleType, string registrationNumber, string manufacturer, string model, string year, string category) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
         {
             Category = category;
         }
-        public int Category
+        public string Category
         {
             get { return category; }
             set
             {
-                if (value < 1 || value > 6)
+                if (string.IsNullOrEmpty(value))
                 {
-                    throw new Exception("");
+                    throw new Exception("Entry is null or empty.");
                 }
             }
         }
