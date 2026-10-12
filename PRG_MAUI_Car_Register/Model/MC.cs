@@ -26,6 +26,7 @@ namespace PRG_MAUI_Car_Register.Model
                 {
                     throw new Exception("Entry is null or empty.");
                 }
+                else { category = value; }
             }
         }
     }

@@ -22,7 +22,7 @@
             </HorizontalStackLayout>
             <Entry x:Name="entryManufacturer" Placeholder="Tillverkare" />
             <Entry x:Name="entryModel" Placeholder="Modell" />
-            <Entry x:Name="entryYear" Placeholder="År" IsVisible="False"/>
+            <Entry x:Name="entryYear" Placeholder="År"/>
             <Entry x:Name="entryDoors" Placeholder="Dörrar" IsVisible="False"/>
             <Entry x:Name="entryCategory" Placeholder="Categori" IsVisible="False"/>
             <Entry x:Name="entryLoadCapacity" Placeholder="lastkapacitet (Ton)" IsVisible="False"/>

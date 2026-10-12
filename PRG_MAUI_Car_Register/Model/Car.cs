@@ -26,6 +26,7 @@ namespace PRG_MAUI_Car_Register.Model
                 {
                     throw new Exception("Invalid amount of doors.");
                 }
+                else { doors = value; }
             }
         }
     }

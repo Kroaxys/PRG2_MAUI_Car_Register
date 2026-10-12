@@ -52,7 +52,7 @@ namespace PRG_MAUI_Car_Register.View
 
                 Vehicle vehicle;
                 string vehicleType = pickerType.SelectedItem.ToString();
-
+                
                 switch (vehicleType)
                 {
                     case "Bil": {
@@ -148,6 +148,9 @@ namespace PRG_MAUI_Car_Register.View
             entryManufacturer.Text = string.Empty;
             entryModel.Text = string.Empty;
             entryYear.Text = string.Empty;
+            entryCategory.Text = string.Empty;
+            entryDoors.Text = string.Empty;
+            entryLoadCapacity.Text = string.Empty;
         }
     }
 }

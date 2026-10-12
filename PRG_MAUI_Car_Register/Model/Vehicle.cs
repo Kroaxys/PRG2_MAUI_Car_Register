@@ -19,6 +19,10 @@ namespace PRG_MAUI_Car_Register.Model
         public Vehicle(string vehicleType, string registrationNumber, string manufacturer, string model, string year) // en konstruktor kan, men måste inte, ta parametrar
         {
             this.vehicleType = vehicleType;
+            RegistrationNumber = registrationNumber;
+            Manufacturer = manufacturer;
+            Model = model;
+            Year = year;
         }
 
         // Get-Set för att hålla variablerna privata, och för att validera inkommande värden från UI (user interface, användargränssnittet)
