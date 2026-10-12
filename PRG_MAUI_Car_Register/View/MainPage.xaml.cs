@@ -73,8 +73,8 @@ namespace PRG_MAUI_Car_Register.View
 
 
                 vehicleList.Add(vehicle);
-                listViewVehicles.ItemsSource = null;
-                listViewVehicles.ItemsSource = vehicleList;
+                collectionViewVehicles.ItemsSource = null;
+                collectionViewVehicles.ItemsSource = vehicleList;
 
                 //Vehicle vehicle;
 

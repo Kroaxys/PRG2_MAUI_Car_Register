@@ -18,7 +18,7 @@ namespace PRG_MAUI_Car_Register.Model
         // Konstruktor (en metod med samma namn som klassen, som returnerar ett objekt)
         public Vehicle(string vehicleType, string registrationNumber, string manufacturer, string model, string year) // en konstruktor kan, men måste inte, ta parametrar
         {
-            this.vehicleType = vehicleType;
+            VehicleType = vehicleType;
             RegistrationNumber = registrationNumber;
             Manufacturer = manufacturer;
             Model = model;
