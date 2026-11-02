@@ -30,7 +30,7 @@ namespace PRG_MAUI_Car_Register.Model
             {
                 if (value < 1)
                 {
-                    throw new Exception("Invalid amount of doors.");
+                    throw new ArgumentException("Invalid amount of doors.");
                 }
                 else { doors = value; }
             }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PRG_MAUI_Car_Register.Model
 {
-    internal class MC : Vehicle
+    abstract class MC : Vehicle
     {
-        private string category;
+        private string wheels;
         public override string GetDescription()
         {
             return
@@ -17,22 +17,32 @@ namespace PRG_MAUI_Car_Register.Model
                     $"Modell: {Model}\n" +
                     $"Typ: {VehicleType}\n" +
                     $"År: {Year}\n" +
-                    $"Kategori: {Category}\n";
+                    $"Kategori: {Wheels}\n";
         }
-        public MC(string vehicleType, string registrationNumber, string manufacturer, string model, string year, string category) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
+        public MC(string vehicleType, string registrationNumber, string manufacturer, string model, string year, string wheels) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
         {
-            Category = category;
+            Wheels = wheels;
         }
-        public string Category
+        public string Wheels
         {
-            get { return category; }
+            get { return wheels; }
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new Exception("Entry is null or empty.");
+                    throw new ArgumentException("Entry is null or empty.");
                 }
-                else { category = value; }
+                else{
+                    int wheelsInt = 0;
+                    if (int.TryParse(value, out wheelsInt))
+                    {
+                        wheels = wheelsInt.ToString();
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Not a number");
+                    }
+                }
             }
         }
     }

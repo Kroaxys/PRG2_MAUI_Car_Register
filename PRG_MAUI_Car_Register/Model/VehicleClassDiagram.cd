@@ -29,5 +29,12 @@
       <FileName>Model\Truck.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="PRG_MAUI_Car_Register.Model.Roadster">
+    <Position X="6.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Roadster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

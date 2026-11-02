@@ -30,7 +30,7 @@ namespace PRG_MAUI_Car_Register.Model
             {
                 if (value <= 0)
                 {
-                    throw new Exception("Ogiltlig lastkapacitet");
+                    throw new ArgumentException("Ogiltlig lastkapacitet");
                 }
                 loadCapacity = value;
             }

@@ -7,11 +7,12 @@ namespace PRG_MAUI_Car_Register.View
     public partial class MainPage : ContentPage
     {
         ObservableCollection<Vehicle> vehicleList = new ObservableCollection<Vehicle>();
-
+        
         public MainPage()
         {
             InitializeComponent();
             pickerType.SelectedIndex = 0;
+            collectionViewVehicles.ItemsSource = vehicleList;
         }
 
         private void OnPickerChanged(object sender, EventArgs e)
@@ -61,7 +62,7 @@ namespace PRG_MAUI_Car_Register.View
                             break; }
                     case "MC": {
                             string category = entryCategory.Text;
-                            vehicle = new MC(vehicleType, registrationNumber, manufacturer, model, year, category);
+                            vehicle = new Roadster(vehicleType, registrationNumber, manufacturer, model, year, category);
                             break; }
                     case "Lastbil": {
                             if (!double.TryParse(entryLoadCapacity.Text, out double loadCapacity)) { throw new ArgumentException("Ogiltlig Lastkapasitet"); }
@@ -73,7 +74,7 @@ namespace PRG_MAUI_Car_Register.View
 
 
                 vehicleList.Add(vehicle);
-
+                
 
                 //Vehicle vehicle;
 
@@ -112,7 +113,7 @@ namespace PRG_MAUI_Car_Register.View
                 filteredList = vehicleList;
             }
 
-            listViewVehicles.ItemsSource = filteredList;
+            collectionViewVehicles.ItemsSource = filteredList;
         }
 
         private void OnSearchClicked(object sender, EventArgs e)
