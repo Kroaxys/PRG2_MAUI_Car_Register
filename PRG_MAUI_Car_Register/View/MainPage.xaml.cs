@@ -73,8 +73,7 @@ namespace PRG_MAUI_Car_Register.View
 
 
                 vehicleList.Add(vehicle);
-                collectionViewVehicles.ItemsSource = null;
-                collectionViewVehicles.ItemsSource = vehicleList;
+
 
                 //Vehicle vehicle;
 
@@ -95,25 +94,25 @@ namespace PRG_MAUI_Car_Register.View
             // Skapa en temporär filtrerad lista baserat på vilken radioknapp som är vald
             IEnumerable<Vehicle> filteredList;
 
-            //if (radioCar.IsChecked)
-            //{
-            //    filteredList = vehicleList.Where(v => v.is Car).ToList();
-            //}
-            //else if (radioMC.IsChecked)
-            //{
-            //    filteredList = vehicleList.Where(v => v.VehicleType == "MC"/*Vehicle.Type.MC*/).ToList();
-            //}
-            //else if (radioTruck.IsChecked)
-            //{
-            //    filteredList = vehicleList.Where(v => v.VehicleType == "Truck"/*Vehicle.Type.Lastbil*/).ToList();
-            //}
-            //else
-            //{
-            //    // Om "Alla" är vald, visa hela listan
-            //    filteredList = vehicleList;
-            //}
+            if (radioCar.IsChecked)
+            {
+                filteredList = vehicleList.Where(v => v is Car).ToList();
+            }
+            else if (radioMC.IsChecked)
+            {
+                filteredList = vehicleList.Where(v => v is MC).ToList();
+            }
+            else if (radioTruck.IsChecked)
+            {
+                filteredList = vehicleList.Where(v => v is Truck).ToList();
+            }
+            else
+            {
+                // Om "Alla" är vald, visa hela listan
+                filteredList = vehicleList;
+            }
 
-            //listViewVehicles.ItemsSource = filteredList;
+            listViewVehicles.ItemsSource = filteredList;
         }
 
         private void OnSearchClicked(object sender, EventArgs e)
@@ -130,11 +129,7 @@ namespace PRG_MAUI_Car_Register.View
 
             if (foundVehicle != null)
             {
-                labelSearchResult.Text = $"Fordon hittat:\n" +
-                                         $"Registreringsnummer: {foundVehicle.RegistrationNumber}\n" +
-                                         $"Tillverkare: {foundVehicle.Manufacturer}\n" +
-                                         $"Modell: {foundVehicle.Model}\n" +
-                                         $"Typ: {foundVehicle.VehicleType}";
+                labelSearchResult.Text = $"Fordon hittat:\n" + foundVehicle.GetDescription();
             }
             else
             {

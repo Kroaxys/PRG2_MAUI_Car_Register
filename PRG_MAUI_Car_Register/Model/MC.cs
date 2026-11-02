@@ -11,7 +11,13 @@ namespace PRG_MAUI_Car_Register.Model
         private string category;
         public override string GetDescription()
         {
-            throw new NotImplementedException();
+            return
+                    $"Registreringsnummer: {RegistrationNumber}\n" +
+                    $"Tillverkare: {Manufacturer}\n" +
+                    $"Modell: {Model}\n" +
+                    $"Typ: {VehicleType}\n" +
+                    $"År: {Year}\n" +
+                    $"Kategori: {Category}\n";
         }
         public MC(string vehicleType, string registrationNumber, string manufacturer, string model, string year, string category) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
         {

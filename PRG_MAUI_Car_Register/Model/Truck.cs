@@ -11,7 +11,13 @@ namespace PRG_MAUI_Car_Register.Model
         private double loadCapacity;
         public override string GetDescription()
         {
-            throw new NotImplementedException();
+            return
+                    $"Registreringsnummer: {RegistrationNumber}\n" +
+                    $"Tillverkare: {Manufacturer}\n" +
+                    $"Modell: {Model}\n" +
+                    $"Typ: {VehicleType}\n" +
+                    $"År: {Year}\n" +
+                    $"Max Vikt: {LoadCapacity}\n";
         }
         public Truck(string vehicleType, string registrationNumber, string manufacturer, string model, string year, double loadCapacity) : base( vehicleType,  registrationNumber,  manufacturer,  model,  year)
         {
