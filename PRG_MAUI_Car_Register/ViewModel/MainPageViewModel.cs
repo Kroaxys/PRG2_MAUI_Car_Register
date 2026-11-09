@@ -1,0 +1,170 @@
+﻿using PRG_MAUI_Car_Register.Model;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PRG_MAUI_Car_Register.ViewModel
+{
+    internal class MainPageViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        ObservableCollection<Vehicle> vehicleList = new ObservableCollection<Vehicle>();
+        public string pickerTypeItem { get; set; } = "Bil";
+
+
+        public MainPageViewModel()
+        {
+            collectionViewVehicles.ItemsSource = vehicleList;
+        }
+
+        private void OnPickerChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string vehicle = pickerTypeItem.ToString();
+                entryDoors.IsVisible = false;
+                entryCategory.IsVisible = false;
+                entryLoadCapacity.IsVisible = false;
+
+                switch (vehicle)
+                {
+                    case "Bil": { entryDoors.IsVisible = true; break; }
+                    case "MC": { entryCategory.IsVisible = true; break; }
+                    case "Lastbil": { entryLoadCapacity.IsVisible = true; break; }
+                }
+            }
+            catch { throw new ArgumentException("Invalid Picker."); }
+
+        }
+
+        private void OnRegisterClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                //Vehicle vehicle = new Vehicle(/*(Vehicle.Type)*/pickerType.SelectedIndex.ToString());
+
+                //vehicle.RegistrationNumber = entryRegistrationNumber.Text;
+                //vehicle.Manufacturer = entryManufacturer.Text;
+                //vehicle.Model = entryModel.Text; 
+                //vehicle.Year = entryYear.Text;
+
+                string manufacturer = entryManufacturer.Text;
+                string year = entryYear.Text;
+                string registrationNumber = entryRegistrationNumber.Text;
+                string model = entryModel.Text;
+
+                Vehicle vehicle;
+                string vehicleType = pickerType.SelectedItem.ToString();
+
+                switch (vehicleType)
+                {
+                    case "Bil":
+                        {
+                            if (!int.TryParse(entryDoors.Text, out int doors)) { throw new ArgumentException("Ogiltlig symboler för dörrar"); }
+                            vehicle = new Car(vehicleType, registrationNumber, manufacturer, model, year, doors);
+                            break;
+                        }
+                    case "MC":
+                        {
+                            string category = entryCategory.Text;
+                            vehicle = new MC(vehicleType, registrationNumber, manufacturer, model, year, category);
+                            break;
+                        }
+                    case "Lastbil":
+                        {
+                            if (!double.TryParse(entryLoadCapacity.Text, out double loadCapacity)) { throw new ArgumentException("Ogiltlig Lastkapasitet"); }
+                            vehicle = new Truck(vehicleType, registrationNumber, manufacturer, model, year, loadCapacity);
+                            break;
+                        }
+                    default: { throw new ArgumentException("Ogiltlig fordonstyp"); }
+                }
+
+
+
+                vehicleList.Add(vehicle);
+
+                //Vehicle vehicle;
+
+                ClearTextFields();
+            }
+
+            // här "fångas" eventuella felmeddelanden från Vehicle
+            catch (ArgumentException ex)
+            {
+                DisplayAlert("Fel", ex.Message, "OK");
+            }
+        }
+
+        private void OnRadioCheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            if (e.Value != true) return;
+
+            // Skapa en temporär filtrerad lista baserat på vilken radioknapp som är vald
+            IEnumerable<Vehicle> filteredList;
+
+            if (radioCar.IsChecked)
+            {
+                filteredList = vehicleList.Where(v => v is Car).ToList();
+            }
+            else if (radioMC.IsChecked)
+            {
+                filteredList = vehicleList.Where(v => v is MC).ToList();
+            }
+            else if (radioTruck.IsChecked)
+            {
+                filteredList = vehicleList.Where(v => v is Truck).ToList();
+            }
+            else
+            {
+                // Om "Alla" är vald, visa hela listan
+                filteredList = vehicleList;
+            }
+
+            collectionViewVehicles.ItemsSource = filteredList;
+        }
+
+        private void OnSearchClicked(object sender, EventArgs e)
+        {
+            string searchTerm = entrySearchRegistrationNumber.Text?.ToLower();
+
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                entrySearchRegistrationNumber.Text = "Ange ett registreringsnummer för att söka.";
+                return;
+            }
+
+            var foundVehicle = vehicleList.FirstOrDefault(v => v.RegistrationNumber?.ToLower() == searchTerm);
+
+            if (foundVehicle != null)
+            {
+                labelSearchResult.Text = $"Fordon hittat:\n" + foundVehicle.GetDescription();
+            }
+            else
+            {
+                labelSearchResult.Text = "Inget fordon hittades med det registreringsnumret.";
+            }
+        }
+
+
+        private void ClearTextFields()
+        {
+            entryRegistrationNumber.Text = string.Empty;
+            entryManufacturer.Text = string.Empty;
+            entryModel.Text = string.Empty;
+            entryYear.Text = string.Empty;
+            entryCategory.Text = string.Empty;
+            entryDoors.Text = string.Empty;
+            entryLoadCapacity.Text = string.Empty;
+        }
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}
+}

@@ -10,7 +10,7 @@
             <HorizontalStackLayout Spacing="20" HorizontalOptions="StartAndExpand">
                 <Entry x:Name="entryRegistrationNumber" Placeholder="Registreringsnummer" />
                 <Label Text="Välj typ:" VerticalOptions="Center"/>
-                <Picker x:Name="pickerType" TextColor="DarkRed" SelectedIndexChanged="OnPickerChanged">
+                <Picker x:Name="pickerType" TextColor="DarkRed" SelectedIndexChanged="OnPickerChanged" SelectedItem="{Binding pickerTypeItem}">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Bil</x:String>
@@ -20,12 +20,14 @@
                     </Picker.ItemsSource>
                 </Picker>
             </HorizontalStackLayout>
+            
             <Entry x:Name="entryManufacturer" Placeholder="Tillverkare" />
             <Entry x:Name="entryModel" Placeholder="Modell" />
             <Entry x:Name="entryYear" Placeholder="År"/>
             <Entry x:Name="entryDoors" Placeholder="Dörrar" IsVisible="False"/>
             <Entry x:Name="entryCategory" Placeholder="Categori" IsVisible="False"/>
             <Entry x:Name="entryLoadCapacity" Placeholder="lastkapacitet (Ton)" IsVisible="False"/>
+            
             <Button x:Name="buttonRegister" Text="Registrera" Clicked="OnRegisterClicked" Margin="0,0,0,20" BackgroundColor="DarkRed"/>
 
             <Label Text="Kategori:" FontAttributes="Bold" />
