@@ -36,7 +36,6 @@
                 <RadioButton x:Name="radioTruck" Content="Lastbil" CheckedChanged="OnRadioCheckedChanged" />
             </HorizontalStackLayout>
 
-            <ListView x:Name="listViewVehicles" Margin="0,0,0,20"/>
             <CollectionView x:Name="collectionViewVehicles">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

@@ -1,18 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="PRG_MAUI_Car_Register.Model.Vehicle">
-    <Position X="7.5" Y="0.75" Width="2.5" />
+    <Position X="8.25" Y="0.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAoEAAAIBAAAAAAEIAAAAAAAAAAAAEAAAAhAAAAKAAA=</HashCode>
       <FileName>Model\Vehicle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PRG_MAUI_Car_Register.Model.MC">
-    <Position X="6" Y="0.75" Width="1.25" />
+    <Position X="6.75" Y="5.5" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAIAAAACAA=</HashCode>
       <FileName>Model\MC.cs</FileName>
       <NewMemberFileName>Model\Car.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+    <Class Name="PRG_MAUI_Car_Register.Model.Car">
+    <Position X="8.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAEAAAABAAAAAAA=</HashCode>
+      <FileName>Model\Car.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PRG_MAUI_Car_Register.Model.Truck">
+    <Position X="11" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIQAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Truck.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
