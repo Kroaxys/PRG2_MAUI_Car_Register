@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PRG_MAUI_Car_Register.ViewModel
 {
@@ -13,35 +14,100 @@ namespace PRG_MAUI_Car_Register.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         ObservableCollection<Vehicle> vehicleList = new ObservableCollection<Vehicle>();
-        public string pickerTypeItem { get; set; } = "Bil";
+        private string pickerTypeItem = "Bil";
+        public string PickerTypeItem
+        {
+            get
+            {
+                return pickerTypeItem;
+            }
+            set
+            {
+                if (pickerTypeItem != value)
+                {
+                    pickerTypeItem = value;
+                    OnPropertyChanged(nameof(PickerTypeItem));
+                    OnPickerChanged();
+                }
+            }
+        }
+        private ObservableCollection<Vehicle> collectionViewVehiclesItemsSource;
+        public ObservableCollection<Vehicle> CollectionViewVehiclesItemsSource
+        {
+            get
+            {
+                return collectionViewVehiclesItemsSource;
+            }
+            set
+            {
+                collectionViewVehiclesItemsSource = value;
+                OnPropertyChanged(nameof(CollectionViewVehiclesItemsSource));
+            }
+        }
+        public bool entryDoorsIsVisible { get; set; } = true;
+        public bool entryCategoryIsVisible { get; set; } = false;
+        public bool entryLoadCapacityIsVisible { get; set; } = false;
+        public string entryManufacturerText { get; set; }
+        public string entryYearText { get; set; }
+        public string entryRegistrationNumberText { get; set; }
+        public string entryModelText { get; set; }
+        public string entryDoorsText { get; set; }
+        public string entryCategoryText { get; set; }
+        public string entryLoadCapacityText { get; set; }
+        public bool radioCarIsChecked { get; set; }
+        public bool radioMCIsChecked { get; set; }
+        public bool radioTruckIsChecked { get; set; }
+        public string entrySearchRegistrationNumberText { get; set; }
+        public string labelSearchResultText { get; set; } = "Sökresultat visas här...";
+        public ICommand? RegisterBtnCommand { get; set; }
+        private string selectedRadioVehicles = "Alla";
+        public string SelectedRadioVehicles
+        {
+            get
+            {
+                return selectedRadioVehicles;
+            }
+            set 
+            {
+                if (selectedRadioVehicles != value) 
+                {
+                    selectedRadioVehicles = value;
+                    OnPropertyChanged(nameof(SelectedRadioVehicles));
+                    OnRadioCheckedChanged();
+                }
+            }
+        }
+        public ICommand? SearchBtnCommand { get; set; }
 
 
         public MainPageViewModel()
         {
-            collectionViewVehicles.ItemsSource = vehicleList;
+            collectionViewVehiclesItemsSource = vehicleList;
+            RegisterBtnCommand = new Command(() => OnRegisterClicked());
+            SearchBtnCommand = new Command(() => OnSearchClicked());
         }
 
-        private void OnPickerChanged(object sender, EventArgs e)
+        private void OnPickerChanged()
         {
             try
             {
                 string vehicle = pickerTypeItem.ToString();
-                entryDoors.IsVisible = false;
-                entryCategory.IsVisible = false;
-                entryLoadCapacity.IsVisible = false;
+                entryDoorsIsVisible = false;
+                entryCategoryIsVisible = false;
+                entryLoadCapacityIsVisible = false;
 
                 switch (vehicle)
                 {
-                    case "Bil": { entryDoors.IsVisible = true; break; }
-                    case "MC": { entryCategory.IsVisible = true; break; }
-                    case "Lastbil": { entryLoadCapacity.IsVisible = true; break; }
+                    case "Bil": { entryDoorsIsVisible = true; break; }
+                    case "MC": { entryCategoryIsVisible = true; break; }
+                    case "Lastbil": { entryLoadCapacityIsVisible = true; break; }
                 }
             }
             catch { throw new ArgumentException("Invalid Picker."); }
 
         }
 
-        private void OnRegisterClicked(object sender, EventArgs e)
+        private void OnRegisterClicked()
         {
             try
             {
@@ -52,31 +118,31 @@ namespace PRG_MAUI_Car_Register.ViewModel
                 //vehicle.Model = entryModel.Text; 
                 //vehicle.Year = entryYear.Text;
 
-                string manufacturer = entryManufacturer.Text;
-                string year = entryYear.Text;
-                string registrationNumber = entryRegistrationNumber.Text;
-                string model = entryModel.Text;
+                string manufacturer = entryManufacturerText;
+                string year = entryYearText;
+                string registrationNumber = entryRegistrationNumberText;
+                string model = entryModelText;
 
                 Vehicle vehicle;
-                string vehicleType = pickerType.SelectedItem.ToString();
+                string vehicleType = pickerTypeItem.ToString();
 
                 switch (vehicleType)
                 {
                     case "Bil":
                         {
-                            if (!int.TryParse(entryDoors.Text, out int doors)) { throw new ArgumentException("Ogiltlig symboler för dörrar"); }
+                            if (!int.TryParse(entryDoorsText, out int doors)) { throw new ArgumentException("Ogiltlig symboler för dörrar"); }
                             vehicle = new Car(vehicleType, registrationNumber, manufacturer, model, year, doors);
                             break;
                         }
                     case "MC":
                         {
-                            string category = entryCategory.Text;
+                            string category = entryCategoryText;
                             vehicle = new MC(vehicleType, registrationNumber, manufacturer, model, year, category);
                             break;
                         }
                     case "Lastbil":
                         {
-                            if (!double.TryParse(entryLoadCapacity.Text, out double loadCapacity)) { throw new ArgumentException("Ogiltlig Lastkapasitet"); }
+                            if (!double.TryParse(entryLoadCapacityText, out double loadCapacity)) { throw new ArgumentException("Ogiltlig Lastkapasitet"); }
                             vehicle = new Truck(vehicleType, registrationNumber, manufacturer, model, year, loadCapacity);
                             break;
                         }
@@ -91,49 +157,69 @@ namespace PRG_MAUI_Car_Register.ViewModel
 
                 ClearTextFields();
             }
-
-            // här "fångas" eventuella felmeddelanden från Vehicle
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                DisplayAlert("Fel", ex.Message, "OK");
             }
         }
 
-        private void OnRadioCheckedChanged(object sender, CheckedChangedEventArgs e)
+        private void OnRadioCheckedChanged()
         {
-            if (e.Value != true) return;
-
             // Skapa en temporär filtrerad lista baserat på vilken radioknapp som är vald
             IEnumerable<Vehicle> filteredList;
 
-            if (radioCar.IsChecked)
+            switch (selectedRadioVehicles)
             {
-                filteredList = vehicleList.Where(v => v is Car).ToList();
-            }
-            else if (radioMC.IsChecked)
-            {
-                filteredList = vehicleList.Where(v => v is MC).ToList();
-            }
-            else if (radioTruck.IsChecked)
-            {
-                filteredList = vehicleList.Where(v => v is Truck).ToList();
-            }
-            else
-            {
-                // Om "Alla" är vald, visa hela listan
-                filteredList = vehicleList;
+                case "Bil":
+                    {
+                        filteredList = vehicleList.Where(v => v is Car).ToList();
+                        break;
+                    }
+                case "MC":
+                    {
+                        filteredList = vehicleList.Where(v => v is MC).ToList();
+                        break;
+                    }
+                case "Lastbil":
+                    {
+                        filteredList = vehicleList.Where(v => v is Truck).ToList(); 
+                        break;
+                    }
+                case "Alla":
+                    {
+                        filteredList = vehicleList;
+                        break;
+                    }
+                default: { throw new ArgumentException("Ogiltlig fordonstyp"); }
             }
 
-            collectionViewVehicles.ItemsSource = filteredList;
+            //if (radioCarIsChecked)
+            //{
+            //    filteredList = vehicleList.Where(v => v is Car).ToList();
+            //}
+            //else if (radioMCIsChecked)
+            //{
+            //    filteredList = vehicleList.Where(v => v is MC).ToList();
+            //}
+            //else if (radioTruckIsChecked)
+            //{
+            //    filteredList = vehicleList.Where(v => v is Truck).ToList();
+            //}
+            //else
+            //{
+            //    // Om "Alla" är vald, visa hela listan
+            //    filteredList = vehicleList;
+            //}
+
+            collectionViewVehiclesItemsSource = new ObservableCollection<Vehicle>(filteredList);
         }
 
-        private void OnSearchClicked(object sender, EventArgs e)
+        private void OnSearchClicked()
         {
-            string searchTerm = entrySearchRegistrationNumber.Text?.ToLower();
+            string searchTerm = entrySearchRegistrationNumberText?.ToLower();
 
             if (string.IsNullOrEmpty(searchTerm))
             {
-                entrySearchRegistrationNumber.Text = "Ange ett registreringsnummer för att söka.";
+                entrySearchRegistrationNumberText = "Ange ett registreringsnummer för att söka.";
                 return;
             }
 
@@ -141,24 +227,24 @@ namespace PRG_MAUI_Car_Register.ViewModel
 
             if (foundVehicle != null)
             {
-                labelSearchResult.Text = $"Fordon hittat:\n" + foundVehicle.GetDescription();
+                labelSearchResultText = $"Fordon hittat:\n" + foundVehicle.GetDescription();
             }
             else
             {
-                labelSearchResult.Text = "Inget fordon hittades med det registreringsnumret.";
+                labelSearchResultText = "Inget fordon hittades med det registreringsnumret.";
             }
         }
 
 
         private void ClearTextFields()
         {
-            entryRegistrationNumber.Text = string.Empty;
-            entryManufacturer.Text = string.Empty;
-            entryModel.Text = string.Empty;
-            entryYear.Text = string.Empty;
-            entryCategory.Text = string.Empty;
-            entryDoors.Text = string.Empty;
-            entryLoadCapacity.Text = string.Empty;
+            entryRegistrationNumberText = string.Empty;
+            entryManufacturerText = string.Empty;
+            entryModelText = string.Empty;
+            entryYearText = string.Empty;
+            entryCategoryText = string.Empty;
+            entryDoorsText = string.Empty;
+            entryLoadCapacityText = string.Empty;
         }
 
         public void OnPropertyChanged(string propertyName)
@@ -167,4 +253,4 @@ namespace PRG_MAUI_Car_Register.ViewModel
         }
     }
 }
-}
+

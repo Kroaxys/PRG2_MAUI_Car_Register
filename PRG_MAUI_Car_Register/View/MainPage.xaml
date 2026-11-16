@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?> 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PRG_MAUI_Car_Register.View.MainPage">
@@ -8,9 +8,9 @@
             <Image Source="car.jpg" Aspect="AspectFit" HeightRequest="150" Margin="0,0,0,20"/>
 
             <HorizontalStackLayout Spacing="20" HorizontalOptions="StartAndExpand">
-                <Entry x:Name="entryRegistrationNumber" Placeholder="Registreringsnummer" />
+                <Entry x:Name="entryRegistrationNumber" Placeholder="Registreringsnummer" Text="{Binding entryRegistrationNumberText}" />
                 <Label Text="Välj typ:" VerticalOptions="Center"/>
-                <Picker x:Name="pickerType" TextColor="DarkRed" SelectedIndexChanged="OnPickerChanged" SelectedItem="{Binding pickerTypeItem}">
+                <Picker x:Name="pickerType" TextColor="DarkRed" SelectedItem="{Binding PickerTypeItem}"> <!--SelectedIndexChanged="{Command OnPickerChangedCommand}"-->
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Bil</x:String>
@@ -20,25 +20,25 @@
                     </Picker.ItemsSource>
                 </Picker>
             </HorizontalStackLayout>
-            
-            <Entry x:Name="entryManufacturer" Placeholder="Tillverkare" />
-            <Entry x:Name="entryModel" Placeholder="Modell" />
-            <Entry x:Name="entryYear" Placeholder="År"/>
-            <Entry x:Name="entryDoors" Placeholder="Dörrar" IsVisible="False"/>
-            <Entry x:Name="entryCategory" Placeholder="Categori" IsVisible="False"/>
-            <Entry x:Name="entryLoadCapacity" Placeholder="lastkapacitet (Ton)" IsVisible="False"/>
-            
-            <Button x:Name="buttonRegister" Text="Registrera" Clicked="OnRegisterClicked" Margin="0,0,0,20" BackgroundColor="DarkRed"/>
+
+            <Entry x:Name="entryManufacturer" Placeholder="Tillverkare" Text="{Binding entryManufacturerText}" />
+            <Entry x:Name="entryModel" Placeholder="Modell" Text="{Binding entryModelText}"/>
+            <Entry x:Name="entryYear" Placeholder="År" Text="{Binding entryYearText}"/>
+            <Entry x:Name="entryDoors" Placeholder="Dörrar" IsVisible="{Binding entryDoorsIsVisible}" Text="{Binding entryDoorsText}"/>
+            <Entry x:Name="entryCategory" Placeholder="Categori" IsVisible="{Binding entryCategoryIsVisible}" Text="{Binding entryCategoryText}"/>
+            <Entry x:Name="entryLoadCapacity" Placeholder="lastkapacitet (Ton)" IsVisible="{Binding entryLoadCapacityIsVisible}" Text="{Binding entryLoadCapacityText}"/>
+
+            <Button x:Name="buttonRegister" Text="Registrera" Command="{Binding RegisterBtnCommand}" Margin="0,0,0,20" BackgroundColor="DarkRed"/>
 
             <Label Text="Kategori:" FontAttributes="Bold" />
-            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,0,0,20" Spacing="10" >
-                <RadioButton x:Name="radioAll" Content="Alla" IsChecked="True" CheckedChanged="OnRadioCheckedChanged" />
-                <RadioButton x:Name="radioCar" Content="Bilar" CheckedChanged="OnRadioCheckedChanged" />
-                <RadioButton x:Name="radioMC" Content="MC" CheckedChanged="OnRadioCheckedChanged" />
-                <RadioButton x:Name="radioTruck" Content="Lastbil" CheckedChanged="OnRadioCheckedChanged" />
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,0,0,20" Spacing="10" RadioButtonGroup.GroupName="radioVehicles" RadioButtonGroup.SelectedValue="{Binding SelectedRadioVehicles}">
+                <RadioButton x:Name="radioAll" Content="Alla" Value="Alla" IsChecked="True" />
+                <RadioButton x:Name="radioCar" Content="Bilar" Value="Bil"  IsChecked="{Binding radioCarIsChecked}" />
+                <RadioButton x:Name="radioMC" Content="MC" Value="MC" IsChecked="{Binding radioMCIsChecked}" />
+                <RadioButton x:Name="radioTruck" Content="Lastbil" Value="Lastbil" IsChecked="{Binding radioTruckIsChecked}" />
             </HorizontalStackLayout>
 
-            <CollectionView x:Name="collectionViewVehicles">
+            <CollectionView x:Name="collectionViewVehicles" ItemsSource="{Binding collectionViewVehiclesItemsSource}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnDefinitions="auto,auto,auto,auto,auto,auto" ColumnSpacing="5">
@@ -57,10 +57,10 @@
             </CollectionView>
 
             <HorizontalStackLayout HorizontalOptions="FillAndExpand" Spacing="20">
-                <Entry x:Name="entrySearchRegistrationNumber" HorizontalOptions="FillAndExpand" Placeholder="Sök på registreringsnummer"></Entry>
-                <Button x:Name="buttonSearch" Text="Sök" HorizontalOptions="End" BackgroundColor="DarkRed" TextColor="White" Clicked="OnSearchClicked"/>
+                <Entry x:Name="entrySearchRegistrationNumber" HorizontalOptions="FillAndExpand" Placeholder="Sök på registreringsnummer" Text="{Binding entrySearchRegistrationNumberText}"></Entry>
+                <Button x:Name="buttonSearch" Text="Sök" HorizontalOptions="End" BackgroundColor="DarkRed" TextColor="White" Command="{Binding SearchBtnCommand}"/>
             </HorizontalStackLayout>
-            <Label x:Name="labelSearchResult" Text="Sökresultat visas här..." TextColor="DarkRed" Margin="0,20,0,0"/>
+            <Label x:Name="labelSearchResult" Text="{Binding labelSearchResultText}" TextColor="DarkRed" Margin="0,20,0,0"/>
         </VerticalStackLayout>
     </ScrollView>
 
