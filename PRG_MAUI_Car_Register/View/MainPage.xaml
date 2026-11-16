@@ -38,7 +38,7 @@
                 <RadioButton x:Name="radioTruck" Content="Lastbil" Value="Lastbil" IsChecked="{Binding radioTruckIsChecked}" />
             </HorizontalStackLayout>
 
-            <CollectionView x:Name="collectionViewVehicles" ItemsSource="{Binding collectionViewVehiclesItemsSource}">
+            <CollectionView x:Name="collectionViewVehicles" ItemsSource="{Binding CollectionViewVehiclesItemsSource}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnDefinitions="auto,auto,auto,auto,auto,auto" ColumnSpacing="5">

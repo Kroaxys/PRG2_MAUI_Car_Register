@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace PRG_MAUI_Car_Register.ViewModel
                 {
                     pickerTypeItem = value;
                     OnPropertyChanged(nameof(PickerTypeItem));
-                    OnPickerChanged();
+                    OnPickerChanged();  
                 }
             }
         }
@@ -104,10 +105,12 @@ namespace PRG_MAUI_Car_Register.ViewModel
                 }
             }
             catch { throw new ArgumentException("Invalid Picker."); }
-
+            OnPropertyChanged(nameof(entryDoorsIsVisible));
+            OnPropertyChanged(nameof(entryCategoryIsVisible));
+            OnPropertyChanged(nameof(entryLoadCapacityIsVisible));
         }
 
-        private void OnRegisterClicked()
+        private async Task OnRegisterClicked()
         {
             try
             {
@@ -159,7 +162,8 @@ namespace PRG_MAUI_Car_Register.ViewModel
             }
             catch (Exception ex)
             {
-            }
+                throw new ArgumentException(ex.ToString());
+                }
         }
 
         private void OnRadioCheckedChanged()
@@ -171,17 +175,17 @@ namespace PRG_MAUI_Car_Register.ViewModel
             {
                 case "Bil":
                     {
-                        filteredList = vehicleList.Where(v => v is Car).ToList();
+                        filteredList = vehicleList.Where(v => v is Car);
                         break;
                     }
                 case "MC":
                     {
-                        filteredList = vehicleList.Where(v => v is MC).ToList();
+                        filteredList = vehicleList.Where(v => v is MC);
                         break;
                     }
                 case "Lastbil":
                     {
-                        filteredList = vehicleList.Where(v => v is Truck).ToList(); 
+                        filteredList = vehicleList.Where(v => v is Truck); 
                         break;
                     }
                 case "Alla":
@@ -210,7 +214,7 @@ namespace PRG_MAUI_Car_Register.ViewModel
             //    filteredList = vehicleList;
             //}
 
-            collectionViewVehiclesItemsSource = new ObservableCollection<Vehicle>(filteredList);
+            CollectionViewVehiclesItemsSource = new ObservableCollection<Vehicle>(filteredList);
         }
 
         private void OnSearchClicked()
@@ -220,6 +224,7 @@ namespace PRG_MAUI_Car_Register.ViewModel
             if (string.IsNullOrEmpty(searchTerm))
             {
                 entrySearchRegistrationNumberText = "Ange ett registreringsnummer för att söka.";
+                OnPropertyChanged(nameof (entrySearchRegistrationNumberText));
                 return;
             }
 
@@ -228,10 +233,12 @@ namespace PRG_MAUI_Car_Register.ViewModel
             if (foundVehicle != null)
             {
                 labelSearchResultText = $"Fordon hittat:\n" + foundVehicle.GetDescription();
+                OnPropertyChanged(nameof(labelSearchResultText));
             }
             else
             {
                 labelSearchResultText = "Inget fordon hittades med det registreringsnumret.";
+                OnPropertyChanged(nameof(labelSearchResultText));
             }
         }
 
@@ -245,6 +252,14 @@ namespace PRG_MAUI_Car_Register.ViewModel
             entryCategoryText = string.Empty;
             entryDoorsText = string.Empty;
             entryLoadCapacityText = string.Empty;
+
+            OnPropertyChanged(nameof(entryRegistrationNumberText));
+            OnPropertyChanged(nameof(entryManufacturerText));
+            OnPropertyChanged(nameof(entryModelText));
+            OnPropertyChanged(nameof(entryYearText));
+            OnPropertyChanged(nameof(entryCategoryText));
+            OnPropertyChanged(nameof(entryDoorsText));
+            OnPropertyChanged(nameof(entryLoadCapacityText));
         }
 
         public void OnPropertyChanged(string propertyName)
